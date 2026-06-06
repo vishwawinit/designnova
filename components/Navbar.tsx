@@ -4,94 +4,101 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
+  { label: "About",      href: "#about" },
   { label: "Curriculum", href: "#curriculum" },
-  { label: "Tools", href: "#tools" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Tools",      href: "#tools" },
+  { label: "Reviews",    href: "#reviews" },
+  { label: "FAQ",        href: "#faq" },
 ];
+
+/* Logo mark – mirrors the DesignNova icon from the SVG */
+function Logo({ light = false }: { light?: boolean }) {
+  const s = light ? "#fff" : "#1a0030";
+  return (
+    <a href="#hero" className="flex items-center gap-2.5 shrink-0">
+      <svg width="34" height="34" viewBox="0 0 42 42" fill="none">
+        <circle cx="14" cy="22" r="8" stroke={s} strokeWidth="3.2" />
+        <line x1="22" y1="22" x2="38" y2="22" stroke={s} strokeWidth="3.2" strokeLinecap="round" />
+        <rect x="11" y="11" width="3.2" height="10" rx="1.6" fill={s} />
+        <rect x="19" y="8" width="10" height="3.2" rx="1.6" fill={s} />
+      </svg>
+      <span
+        className="font-black text-[17px] tracking-tight"
+        style={{ color: light ? "#fff" : "#1a0030" }}
+      >
+        Design<span style={{ color: "#D447FF" }}>Nova</span>
+      </span>
+    </a>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  const light = !scrolled; // white text over purple hero
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-3" : "py-5"
-      }`}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
       <div
-        className={`mx-4 md:mx-8 rounded-2xl transition-all duration-300 ${
+        className={`mx-4 md:mx-8 mt-4 rounded-2xl transition-all duration-300 ${
           scrolled
-            ? "bg-[#0A0012]/90 backdrop-blur-xl border border-[#D447FF]/20 shadow-[0_4px_40px_rgba(212,71,255,0.12)]"
+            ? "bg-white/95 backdrop-blur-xl shadow-[0_4px_32px_rgba(212,71,255,0.12)] border border-[#EFB9FF]/60"
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#hero" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 relative">
-              <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="14" r="7" stroke="white" strokeWidth="3" />
-                <path d="M21 14 H36" stroke="white" strokeWidth="3" />
-                <rect x="14" y="21" width="3" height="8" fill="white" />
-                <rect x="21" y="7" width="8" height="3" fill="white" />
-              </svg>
-            </div>
-            <span className="text-white font-bold text-lg tracking-wide">
-              Design<span className="text-[#D447FF]">Nova</span>
-            </span>
-          </a>
+        <div className="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
+          <Logo light={light} />
 
-          {/* Desktop nav */}
+          {/* Desktop links */}
           <div className="hidden md:flex items-center gap-1">
-            <div className="flex items-center bg-white/5 rounded-full px-2 py-1.5 border border-white/10 gap-1">
-              <div className="w-2 h-2 rounded-full bg-[#D447FF]" />
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="nav-link text-sm text-white/75 hover:text-white px-3 py-1 rounded-full hover:bg-white/10 transition-all duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+            {navLinks.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className={`relative text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 nav-link ${
+                  light
+                    ? "text-white/80 hover:text-white hover:bg-white/10"
+                    : "text-[#3d1f5c] hover:text-[#D447FF] hover:bg-[#FAEAFF]"
+                }`}
+              >
+                {label}
+              </a>
+            ))}
           </div>
 
-          {/* CTA buttons */}
+          {/* CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <a
-              href="#enroll"
-              className="btn-primary text-white text-sm font-semibold px-5 py-2.5 rounded-full flex items-center gap-2"
-            >
-              Enroll Now
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12H19M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-            <a
-              href="#demo"
-              className="btn-outline text-white/80 text-sm font-medium px-5 py-2.5 rounded-full flex items-center gap-2"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M5 3L19 12L5 21V3Z" fill="white" fillOpacity="0.8"/>
-              </svg>
-              Free Demo
-            </a>
+            {light ? (
+              <>
+                <a href="#curriculum" className="btn-ghost-white text-sm font-semibold px-5 py-2 rounded-full">
+                  Free Demo
+                </a>
+                <a href="#curriculum" className="btn-white text-sm px-5 py-2 rounded-full">
+                  Enroll Now
+                </a>
+              </>
+            ) : (
+              <>
+                <a href="#curriculum" className={`text-sm font-semibold px-5 py-2 rounded-full border border-[#EFB9FF] text-[#D447FF] hover:bg-[#FAEAFF] transition-colors`}>
+                  Free Demo
+                </a>
+                <a href="#curriculum" className="btn-purple text-sm font-bold px-5 py-2.5 rounded-full">
+                  Enroll Now
+                </a>
+              </>
+            )}
           </div>
 
-          {/* Mobile menu toggle */}
+          {/* Mobile toggle */}
           <button
-            className="md:hidden text-white p-2"
+            className={`md:hidden p-2 rounded-lg transition-colors ${light ? "text-white" : "text-[#1a0030]"}`}
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -99,25 +106,25 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile drawer */}
         {open && (
-          <div className="md:hidden border-t border-white/10 px-4 pb-4 pt-3 flex flex-col gap-2">
-            {navLinks.map((link) => (
+          <div className="md:hidden bg-white border-t border-[#EFB9FF]/40 px-5 pb-5 pt-3 flex flex-col gap-1">
+            {navLinks.map(({ label, href }) => (
               <a
-                key={link.label}
-                href={link.href}
+                key={label}
+                href={href}
                 onClick={() => setOpen(false)}
-                className="text-white/75 hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition-all text-sm"
+                className="text-[#3d1f5c] hover:text-[#D447FF] text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-[#FAEAFF] transition-colors"
               >
-                {link.label}
+                {label}
               </a>
             ))}
-            <div className="flex gap-3 mt-3">
-              <a href="#enroll" className="btn-primary text-white text-sm font-semibold px-5 py-2.5 rounded-full flex-1 text-center">
-                Enroll Now
-              </a>
-              <a href="#demo" className="btn-outline text-white/80 text-sm font-medium px-5 py-2.5 rounded-full flex-1 text-center">
+            <div className="flex gap-3 mt-3 pt-3 border-t border-[#EFB9FF]/40">
+              <a href="#curriculum" className="border border-[#EFB9FF] text-[#D447FF] text-sm font-semibold px-4 py-2.5 rounded-full flex-1 text-center hover:bg-[#FAEAFF] transition-colors">
                 Free Demo
+              </a>
+              <a href="#curriculum" className="btn-purple text-sm font-bold px-4 py-2.5 rounded-full flex-1 text-center">
+                Enroll Now
               </a>
             </div>
           </div>

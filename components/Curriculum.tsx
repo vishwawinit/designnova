@@ -7,111 +7,128 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 const modules = [
   {
     week: "Week 1",
-    title: "Design Foundations & UI Basics",
-    topics: [
-      "Introduction to UI/UX Design principles",
-      "Understanding users — research & empathy mapping",
-      "Typography, color theory & visual hierarchy",
-      "Grid systems and spacing fundamentals",
-    ],
+    title: "Design Foundations & Visual Principles",
     hours: "12 hrs",
+    topics: [
+      "Introduction to UI/UX — roles, tools & industry overview",
+      "Design thinking & empathy mapping",
+      "Typography, colour theory & visual hierarchy",
+      "Grid systems, spacing & layout fundamentals",
+    ],
   },
   {
     week: "Week 2",
     title: "Figma Mastery",
-    topics: [
-      "Figma workspace & components",
-      "Auto-layout, variants & design tokens",
-      "Creating reusable design systems",
-      "Collaborative design workflows",
-    ],
     hours: "15 hrs",
+    topics: [
+      "Figma workspace, shortcuts & layers",
+      "Auto-layout, components, variants & tokens",
+      "Building scalable design systems",
+      "Collaborative design & handoff workflows",
+    ],
   },
   {
     week: "Week 3",
     title: "UX Research & Wireframing",
-    topics: [
-      "User journey mapping & personas",
-      "Wireframing — lo-fi to hi-fi",
-      "Information architecture & card sorting",
-      "Usability testing techniques",
-    ],
     hours: "14 hrs",
+    topics: [
+      "User research methods & personas",
+      "Wireframing — low-fi to high-fi",
+      "Information architecture & card sorting",
+      "Usability testing & iterative design",
+    ],
   },
   {
     week: "Week 4",
     title: "Interaction Design & Prototyping",
+    hours: "13 hrs",
     topics: [
       "Micro-interactions & motion design",
-      "Interactive prototypes in Figma",
+      "High-fidelity interactive prototypes",
       "Advanced animations & transitions",
-      "Accessibility & WCAG guidelines",
+      "WCAG accessibility guidelines",
     ],
-    hours: "13 hrs",
   },
   {
     week: "Week 5",
     title: "AI Tools for Designers",
-    topics: [
-      "Midjourney & DALL-E for design ideation",
-      "AI-assisted UI generation with Galileo & Uizard",
-      "GitHub Copilot for design handoff",
-      "Prompt engineering for designers",
-    ],
     hours: "16 hrs",
+    topics: [
+      "Midjourney & DALL-E for ideation",
+      "Galileo, Uizard & AI-assisted UI generation",
+      "Framer AI & GitHub Copilot for handoff",
+      "Prompt engineering fundamentals for designers",
+    ],
   },
   {
     week: "Week 6",
     title: "Portfolio, Branding & Placement",
-    topics: [
-      "Building a standout portfolio",
-      "Behance & Dribbble optimization",
-      "LinkedIn for design jobs",
-      "Mock interviews & resume review",
-    ],
     hours: "12 hrs",
+    topics: [
+      "Crafting a standout portfolio",
+      "Behance, Dribbble & LinkedIn optimisation",
+      "Resume building & mock interviews",
+      "Salary negotiation & offer evaluation",
+    ],
   },
   {
     week: "Bonus",
     title: "Freelancing & Business of Design",
+    hours: "8 hrs",
     topics: [
       "Pricing your design services",
       "Client communication & contracts",
       "Building a personal brand",
       "Scaling from freelancer to studio",
     ],
-    hours: "8 hrs",
   },
 ];
 
-function CurriculumItem({ mod, index }: { mod: typeof modules[0]; index: number }) {
-  const [open, setOpen] = useState(index === 0);
+function Item({ mod, index, defaultOpen = false }: { mod: typeof modules[0]; index: number; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.06, duration: 0.5 }}
-      className="border border-[#D447FF]/15 rounded-2xl overflow-hidden bg-white/[0.02] hover:border-[#D447FF]/35 transition-colors"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className={`rounded-2xl overflow-hidden border transition-all duration-300 ${
+        open ? "border-[#D447FF]/60 shadow-[0_6px_30px_rgba(212,71,255,0.1)]" : "border-[#EFB9FF] hover:border-[#D447FF]/40"
+      } bg-white`}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-4 p-5 text-left group"
+        className="w-full flex items-center gap-4 px-5 py-5 text-left group"
       >
-        <div className="w-10 h-10 rounded-xl bg-[#D447FF]/12 border border-[#D447FF]/25 flex items-center justify-center shrink-0">
-          <span className="text-[#D447FF] text-xs font-bold">{mod.week.replace("Week ","W").replace("Bonus","B")}</span>
+        {/* Week badge */}
+        <div
+          className="shrink-0 w-14 h-14 rounded-xl flex flex-col items-center justify-center text-center"
+          style={{ background: open ? "linear-gradient(135deg,#D447FF,#9519FF)" : "#FAEAFF" }}
+        >
+          <span className={`text-[10px] font-bold uppercase tracking-wide ${open ? "text-white/70" : "text-[#D447FF]/70"}`}>
+            {mod.week.includes("Bonus") ? "Bonus" : "Week"}
+          </span>
+          <span className={`text-lg font-black leading-none ${open ? "text-white" : "text-[#D447FF]"}`}>
+            {mod.week.replace("Week ", "").replace("Bonus", "★")}
+          </span>
         </div>
-        <div className="flex-1">
-          <div className="text-white font-semibold text-base group-hover:text-[#E592FF] transition-colors">
+
+        <div className="flex-1 min-w-0">
+          <p className="text-[#1a0030] font-bold text-base leading-snug group-hover:text-[#D447FF] transition-colors">
             {mod.title}
-          </div>
-          <div className="text-white/40 text-xs mt-0.5">{mod.hours} · {mod.topics.length} lessons</div>
+          </p>
+          <p className="text-[#9370b3] text-xs mt-1">
+            {mod.hours} · {mod.topics.length} lessons
+          </p>
         </div>
+
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.25 }}
-          className="text-[#D447FF]"
+          className={`shrink-0 w-9 h-9 rounded-full border flex items-center justify-center transition-colors ${
+            open ? "bg-[#D447FF] border-[#D447FF] text-white" : "border-[#EFB9FF] text-[#D447FF] bg-[#FAEAFF]"
+          }`}
         >
-          <ChevronDown size={20} />
+          <ChevronDown size={16} />
         </motion.div>
       </button>
 
@@ -124,11 +141,11 @@ function CurriculumItem({ mod, index }: { mod: typeof modules[0]; index: number 
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 pt-0 grid grid-cols-1 md:grid-cols-2 gap-2 border-t border-white/5">
-              {mod.topics.map((topic, j) => (
-                <div key={j} className="flex items-start gap-2.5 py-2">
-                  <ChevronRight size={14} className="text-[#D447FF] mt-0.5 shrink-0" />
-                  <span className="text-white/65 text-sm">{topic}</span>
+            <div className="px-5 pb-5 border-t border-[#EFB9FF] pt-4 grid sm:grid-cols-2 gap-2">
+              {mod.topics.map((t, j) => (
+                <div key={j} className="flex items-start gap-2.5">
+                  <ChevronRight size={13} className="text-[#D447FF] mt-0.5 shrink-0" />
+                  <span className="text-[#4b2d70] text-sm leading-snug">{t}</span>
                 </div>
               ))}
             </div>
@@ -141,52 +158,58 @@ function CurriculumItem({ mod, index }: { mod: typeof modules[0]; index: number 
 
 export default function Curriculum() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
-    <section id="curriculum" ref={ref} className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0012] to-[#0F001A]" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-[#D447FF]/30 via-[#D447FF]/10 to-transparent pointer-events-none" />
+    <section id="curriculum" ref={ref} className="bg-[#faf5ff] py-24 px-4 md:px-8">
+      <div className="max-w-4xl mx-auto">
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <span className="inline-block text-[#D447FF] text-sm font-semibold uppercase tracking-widest mb-4 bg-[#D447FF]/10 px-4 py-2 rounded-full border border-[#D447FF]/20">
-            Course Content
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
-            UI/UX With AI
-            <br />
-            <span className="gradient-text">Course Curriculum</span>
+          <div className="section-tag mb-5 mx-auto w-fit">
+            <span className="divider-dot" /> Course Content
+          </div>
+          <h2
+            className="font-black text-[#1a0030] leading-tight tracking-tight"
+            style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.4rem)" }}
+          >
+            UI/UX With AI<br />
+            <span className="grad-text">Course Curriculum</span>
           </h2>
-          <p className="mt-4 text-white/50 text-base max-w-xl mx-auto">
-            Structured 60-day curriculum covering everything from design fundamentals
-            to AI-powered workflows and job placement.
+          <p className="mt-4 text-[#7a5899] text-base max-w-lg mx-auto leading-relaxed">
+            60-day structured curriculum — from design fundamentals to AI workflows and job placement.
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-3">
-          {modules.map((mod, i) => (
-            <CurriculumItem key={mod.week} mod={mod} index={i} />
-          ))}
+        {/* Progress line + items */}
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-[26px] top-0 bottom-0 w-px bg-gradient-to-b from-[#D447FF] via-[#EFB9FF] to-transparent hidden md:block" />
+
+          <div className="flex flex-col gap-3 pl-0 md:pl-16">
+            {modules.map((mod, i) => (
+              <Item key={mod.week} mod={mod} index={i} defaultOpen={i === 0} />
+            ))}
+          </div>
         </div>
 
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="mt-10 text-center"
+          transition={{ delay: 0.5 }}
+          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <p className="text-white/40 text-sm mb-4">Total Duration: 90+ hours of live instruction & projects</p>
-          <a
-            href="#enroll"
-            className="btn-primary inline-flex items-center gap-2 text-white font-bold text-base px-8 py-4 rounded-full"
-          >
-            Download Full Syllabus
+          <p className="text-[#9370b3] text-sm">
+            90+ hours of live instruction · 5 real-world projects
+          </p>
+          <a href="#enroll" className="btn-purple text-white font-bold text-sm px-7 py-3 rounded-full">
+            Download Full Syllabus →
           </a>
         </motion.div>
       </div>

@@ -6,64 +6,83 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    q: "Do I need prior design experience to join?",
-    a: "No prior experience required! The course starts from absolute basics and takes you to professional-level design. All you need is a computer and a willingness to learn.",
+    q: "Do I need any design experience to join?",
+    a: "None at all. DesignNova is built for absolute beginners. We start from the very basics of design principles and progressively take you to advanced AI-powered UI/UX workflows.",
   },
   {
-    q: "What software do I need?",
-    a: "Figma (free), which is the industry-standard tool. We also cover Adobe XD and various AI tools. Everything you need is either free or included in the course.",
+    q: "Is this a live course or self-paced?",
+    a: "It's a live programme with weekly sessions, daily design challenges, and 1-on-1 mentor check-ins. Recordings are available after each session so you never miss anything.",
   },
   {
-    q: "How is the course structured?",
-    a: "60 days of structured learning with 3-4 hours of daily live sessions, practical assignments, and weekly mentor reviews. You'll build 5+ projects for your portfolio.",
+    q: "What tools will I learn?",
+    a: "Figma (primary), Adobe XD, Framer, Principle for prototyping, plus AI tools like Midjourney, Galileo, Uizard, and more. You'll leave with a complete industry toolkit.",
   },
   {
-    q: "Do you guarantee placement?",
-    a: "We provide dedicated placement assistance — resume review, mock interviews, and direct referrals to 500+ hiring partners. Most students get placed within 30-60 days of completion.",
+    q: "Will I get a job after completing the programme?",
+    a: "Our placement cell actively connects you with 500+ hiring partners. We offer resume reviews, mock interviews, and direct referrals. Our placement rate is 92% within 90 days of graduation.",
   },
   {
-    q: "Is the certificate globally recognized?",
-    a: "Yes, DesignNova's certification is recognized by 500+ companies including startups, MNCs, and agencies globally. It's a strong signal on your LinkedIn profile.",
+    q: "How much time should I commit each week?",
+    a: "Expect 2-3 hours of live learning per day plus project work. The 60-day format is designed to be intense but achievable alongside a day job if you manage your schedule.",
   },
   {
-    q: "What happens if I miss a live session?",
-    a: "All sessions are recorded and available for 12 months. You can watch recordings anytime and still get your doubts resolved in the next live session.",
+    q: "Is there an EMI or instalment option?",
+    a: "Yes — we offer 3-month, 6-month, and 12-month no-cost EMI options on all major cards. You can also pay in two instalments with a small admin fee.",
   },
   {
-    q: "Can I pay in installments?",
-    a: "Yes! We offer EMI options with 0% interest through various payment providers. Reach out to our counseling team for a personalized payment plan.",
+    q: "What is the refund policy?",
+    a: "If you complete the programme and don't land a job within 6 months, we offer a full refund — no questions asked. Your success is our success.",
   },
 ];
 
-function FAQItem({ item, i }: { item: typeof faqs[0]; i: number }) {
+function Item({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: i * 0.06, duration: 0.45 }}
-      className="border border-white/10 rounded-2xl overflow-hidden hover:border-[#D447FF]/30 transition-colors"
+      transition={{ delay: index * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+        open
+          ? "border-[#D447FF]/50 shadow-[0_4px_24px_rgba(212,71,255,0.1)] bg-white"
+          : "border-[#EFB9FF] bg-white hover:border-[#D447FF]/40 hover:shadow-[0_2px_12px_rgba(212,71,255,0.07)]"
+      }`}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 p-5 text-left"
+        className="w-full flex items-center gap-4 px-6 py-5 text-left group"
       >
-        <span className="text-white font-semibold text-base pr-4">{item.q}</span>
-        <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${open ? "bg-[#D447FF] text-white" : "bg-white/10 text-white/60"}`}>
-          {open ? <Minus size={16} /> : <Plus size={16} />}
+        <div
+          className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 text-white"
+          style={
+            open
+              ? { background: "linear-gradient(135deg,#D447FF,#9519FF)" }
+              : { background: "#FAEAFF", color: "#D447FF", border: "1px solid #EFB9FF" }
+          }
+        >
+          {open ? <Minus size={14} /> : <Plus size={14} style={{ color: "#D447FF" }} />}
         </div>
+        <span
+          className={`flex-1 font-semibold text-sm md:text-base leading-snug transition-colors ${
+            open ? "text-[#D447FF]" : "text-[#1a0030] group-hover:text-[#D447FF]"
+          }`}
+        >
+          {q}
+        </span>
       </button>
+
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.28, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 pt-0 text-white/60 text-sm leading-relaxed border-t border-white/5">
-              {item.a}
+            <div className="px-6 pb-5 border-t border-[#FAEAFF] pt-4">
+              <p className="text-[#4b2d70] text-sm leading-relaxed">{a}</p>
             </div>
           </motion.div>
         )}
@@ -74,32 +93,55 @@ function FAQItem({ item, i }: { item: typeof faqs[0]; i: number }) {
 
 export default function FAQ() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
-    <section id="faq" ref={ref} className="relative py-24 overflow-hidden bg-black">
-      <div className="relative z-10 max-w-3xl mx-auto px-6">
+    <section id="faq" ref={ref} className="bg-white py-24 px-4 md:px-8">
+      <div className="max-w-3xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-12"
         >
-          <span className="inline-block text-[#D447FF] text-sm font-semibold uppercase tracking-widest mb-4 bg-[#D447FF]/10 px-4 py-2 rounded-full border border-[#D447FF]/20">
-            FAQ
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
-            Got questions?
-            <br />
-            <span className="gradient-text">We have answers</span>
+          <div className="section-tag mb-5 mx-auto w-fit">
+            <span className="divider-dot" /> FAQs
+          </div>
+          <h2
+            className="font-black text-[#1a0030] leading-tight tracking-tight"
+            style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)" }}
+          >
+            Frequently asked<br />
+            <span className="grad-text">questions</span>
           </h2>
+          <p className="mt-4 text-[#7a5899] text-base max-w-md mx-auto">
+            Still have questions? Reach us on WhatsApp — we reply within minutes.
+          </p>
         </motion.div>
 
         <div className="flex flex-col gap-3">
-          {faqs.map((faq, i) => (
-            <FAQItem key={i} item={faq} i={i} />
+          {faqs.map((item, i) => (
+            <Item key={i} q={item.q} a={item.a} index={i} />
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5 }}
+          className="mt-10 text-center"
+        >
+          <p className="text-[#9370b3] text-sm mb-4">Can't find what you're looking for?</p>
+          <a
+            href="#enroll"
+            className="btn-purple inline-flex items-center gap-2 px-7 py-3 rounded-full font-bold text-white text-sm"
+          >
+            Talk to an advisor
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );
