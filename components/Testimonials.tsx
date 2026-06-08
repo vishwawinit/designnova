@@ -1,180 +1,174 @@
 "use client";
-
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Real testimonials from Frame 105.svg — exact text preserved
 const reviews = [
-  {
-    initials: "ST", name: "Sai Teja",     role: "UI Designer",               company: "TCS",      color: "#1E4DB7",
-    text: "The overall learning experience was really well-structured and insightful. Bharath sir explained UI/UX concepts in a very simple and practical way. Thank You Sir, I placed in TCS.",
-  },
-  {
-    initials: "PL", name: "Priya Laxmi",  role: "UX Designer",               company: "Infosys",  color: "#007CC3",
-    text: "The overall learning experience was really well-structured and insightful. Bharath sir explained UI/UX concepts in a very simple and practical way. I got placed at Infosys. Highly recommend DesignNova to anyone who wants to get into UI/UX.",
-  },
-  {
-    initials: "RK", name: "Rahul Kumar",  role: "Product Designer",          company: "Wipro",    color: "#341572",
-    text: "The overall learning experience was really well-structured and insightful. Bharath sir explained UI/UX concepts in a very simple and practical way. Got my first design job at Wipro within 2 months of completing the course.",
-  },
-  {
-    initials: "AP", name: "Anitha P.",    role: "UI/UX Designer",            company: "TATA",     color: "#1E4DB7",
-    text: "DesignNova completely changed my career path. The free internship after the course gave me hands-on experience that made my resume stand out. Now working as a designer at TATA. Forever grateful to Bharath sir.",
-  },
-  {
-    initials: "MN", name: "Manoj N.",     role: "Interaction Designer",      company: "Uber",     color: "#000000",
-    text: "The practical approach is what sets DesignNova apart. Real industry-level projects, mentorship from Bharath sir, and a supportive batch community. Landed an offer at Uber within 45 days of graduation.",
-  },
-  {
-    initials: "SR", name: "Sunita Rao",   role: "Visual Designer",           company: "HCL",      color: "#00629B",
-    text: "As a working professional switching careers, the weekend batch fit perfectly into my schedule. The structured 60-day curriculum and placement support helped me transition smoothly. Now at HCL as a Visual Designer.",
-  },
+  { company: "TCS",     logo: "TCS",     color:"#1E4DB7" },
+  { company: "Uber",    logo: "Uber",    color:"#000000" },
+  { company: "Infosys", logo: "Infosys", color:"#007CC3" },
+  { company: "TATA",    logo: "TATA",    color:"#1E4DB7" },
 ];
-
-function Stars({ n = 5, size = 13 }: { n?: number; size?: number }) {
-  return (
-    <div className="flex gap-0.5">
-      {[...Array(n)].map((_, i) => (
-        <svg key={i} width={size} height={size} viewBox="0 0 24 24">
-          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFE600"/>
-        </svg>
-      ))}
-    </div>
-  );
-}
+const text = "The overall learning experience was really well-structured and insightful. Bharath sir explained UI/UX concepts in a very simple and practical way. Thank You Sir, i placed in";
 
 export default function Testimonials() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
   const [active, setActive] = useState(0);
-  const [auto, setAuto] = useState(true);
 
   useEffect(() => {
-    if (!auto) return;
-    const t = setInterval(() => setActive(i => (i + 1) % reviews.length), 4500);
+    const t = setInterval(() => setActive(i => (i+1) % reviews.length), 4000);
     return () => clearInterval(t);
-  }, [auto]);
-
-  const prev = () => { setAuto(false); setActive(i => (i - 1 + reviews.length) % reviews.length); };
-  const next = () => { setAuto(false); setActive(i => (i + 1) % reviews.length); };
-
-  const r = reviews[active];
+  }, []);
 
   return (
-    <section id="reviews" ref={ref} className="bg-[#faf5ff] py-24 px-4 md:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="reviews" ref={ref} className="bg-white py-20 px-4 md:px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
 
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity:0, y:30 }}
+          animate={inView?{opacity:1,y:0}:{}}
+          transition={{ duration:0.7 }}
+          className="font-black uppercase text-center mb-12"
+          style={{
+            fontSize:"clamp(2.5rem,6vw,5rem)",
+            color:"#D447FF",
+            letterSpacing:"-0.01em",
+          }}
         >
-          <div className="section-tag mb-5 mx-auto w-fit">
-            <span className="divider-dot" /> Student Reviews
-          </div>
-          <h2
-            className="font-black text-[#1a0030] leading-tight tracking-tight"
-            style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.4rem)" }}
-          >
-            Our graduates got placed at<br />
-            <span className="grad-text">TCS, TATA, Uber & more</span>
-          </h2>
-          <div className="mt-3 flex items-center justify-center gap-2">
-            <Stars n={5} />
-            <span className="text-[#1a0030] font-bold text-sm">4.8</span>
-            <span className="text-[#9370b3] text-sm">· 1,200+ verified reviews</span>
-          </div>
-        </motion.div>
+          Students Got Placed
+        </motion.h2>
 
-        {/* Main rotating review */}
-        <div className="max-w-3xl mx-auto mb-10">
-          <AnimatePresence mode="wait">
+        <div className="grid md:grid-cols-3 gap-6 items-start mb-10">
+          {/* Testimonial cards */}
+          {reviews.slice(0,2).map((r,i) => (
             <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-              className="card-white rounded-3xl p-8 md:p-10 text-center relative"
+              key={r.company}
+              initial={{ opacity:0, y:24 }}
+              animate={inView?{opacity:1,y:0}:{}}
+              transition={{ delay:0.1+i*0.12, duration:0.6 }}
+              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm"
             >
-              <div className="text-6xl leading-none font-black mb-5 opacity-[0.18]" style={{ color: "#D447FF" }}>"</div>
-              <p className="text-[#3d1f5c] text-lg leading-relaxed mb-8">{r.text}</p>
-              <div className="flex items-center justify-center gap-4 flex-wrap">
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center font-black text-sm text-white shrink-0"
-                  style={{ background: `linear-gradient(135deg, ${r.color}, ${r.color}99)` }}
-                >
-                  {r.initials}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-black"
+                    style={{ background:"linear-gradient(135deg,#D447FF,#9519FF)" }}
+                  >B</div>
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <p className="text-gray-900 font-bold text-sm">Bharath</p>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#D447FF"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p className="text-gray-400 text-xs">UI Designer</p>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <p className="text-[#1a0030] font-bold text-sm">{r.name}</p>
-                  <p className="text-[#9370b3] text-xs">{r.role}</p>
-                </div>
-                <div className="flex flex-col items-start gap-1">
-                  <Stars n={5} />
-                  <span
-                    className="text-[10px] font-bold px-2.5 py-0.5 rounded-full text-white"
-                    style={{ background: r.color }}
-                  >
-                    Placed @ {r.company}
-                  </span>
+                <svg viewBox="0 0 24 24" fill="#0077B5" width="20" height="20">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                {text} <strong>{r.company}</strong>
+              </p>
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                <span className="font-black text-base tracking-tight" style={{ color:r.color }}>{r.logo}</span>
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_,j)=>(
+                    <svg key={j} width="11" height="11" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFD700"/></svg>
+                  ))}
                 </div>
               </div>
-
-              {/* Prev / Next */}
-              <button onClick={prev} className="absolute top-1/2 -translate-y-1/2 -left-5 hidden md:flex w-10 h-10 rounded-full bg-white border border-[#EFB9FF] items-center justify-center text-[#D447FF] hover:bg-[#FAEAFF] hover:shadow-md transition-all">
-                <ChevronLeft size={18} />
-              </button>
-              <button onClick={next} className="absolute top-1/2 -translate-y-1/2 -right-5 hidden md:flex w-10 h-10 rounded-full bg-white border border-[#EFB9FF] items-center justify-center text-[#D447FF] hover:bg-[#FAEAFF] hover:shadow-md transition-all">
-                <ChevronRight size={18} />
-              </button>
             </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Dot indicators */}
-        <div className="flex justify-center gap-2 mb-14">
-          {reviews.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => { setAuto(false); setActive(i); }}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: active === i ? 24 : 8,
-                height: 8,
-                background: active === i ? "linear-gradient(90deg,#D447FF,#9519FF)" : "#EFB9FF",
-              }}
-            />
           ))}
+
+          {/* Center CTA */}
+          <motion.div
+            initial={{ opacity:0, scale:0.9 }}
+            animate={inView?{opacity:1,scale:1}:{}}
+            transition={{ delay:0.3 }}
+            className="flex flex-col items-center justify-center gap-4 py-8"
+          >
+            <div className="text-center rounded-3xl px-8 py-6" style={{ background:"#FAEAFF", border:"2px solid #EFB9FF" }}>
+              <p className="font-black text-4xl" style={{ color:"#D447FF" }}>10K+</p>
+              <p className="font-black text-lg text-gray-900 uppercase leading-tight mt-1">Students Got<br/>Placed</p>
+              <a href="#contact"
+                className="inline-flex items-center gap-2 mt-4 text-white font-bold text-sm px-6 py-3 rounded-full"
+                style={{ background:"linear-gradient(135deg,#D447FF,#9519FF)", boxShadow:"0 6px 20px rgba(212,71,255,.4)" }}
+              >
+                Enroll Now
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M5 3L19 12L5 21V3Z"/></svg>
+              </a>
+            </div>
+
+            {/* Prev/next dots */}
+            <div className="flex gap-2 mt-2">
+              {reviews.map((_,i)=>(
+                <button key={i} onClick={()=>setActive(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{ width:active===i?24:8, height:8, background:active===i?"#D447FF":"#EFB9FF" }}
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Mini cards grid */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {reviews.slice(0, 3).map((rv, i) => (
-            <motion.div
-              key={rv.name}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-              className="card-pale rounded-2xl p-6 cursor-pointer"
-              onClick={() => { setAuto(false); setActive(i); }}
-            >
-              <Stars n={5} />
-              <p className="text-[#4b2d70] text-sm mt-3 mb-4 leading-relaxed line-clamp-3">{rv.text}</p>
-              <div className="flex items-center gap-2.5">
-                <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-black shrink-0"
-                  style={{ background: `linear-gradient(135deg, ${rv.color}, ${rv.color}88)` }}
-                >
-                  {rv.initials}
-                </div>
+        {/* Third card - active */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity:0, x:20 }}
+            animate={{ opacity:1, x:0 }}
+            exit={{ opacity:0, x:-20 }}
+            className="max-w-sm md:hidden"
+          >
+            <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-black"
+                  style={{ background:"linear-gradient(135deg,#D447FF,#9519FF)" }}
+                >B</div>
                 <div>
-                  <p className="text-[#1a0030] font-semibold text-xs">{rv.name}</p>
-                  <p className="text-[#9370b3] text-[11px]">{rv.role} · {rv.company}</p>
+                  <p className="text-gray-900 font-bold text-sm">Bharath</p>
+                  <p className="text-gray-400 text-xs">UI Designer</p>
                 </div>
               </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {text} <strong>{reviews[active].company}</strong>
+              </p>
+              <p className="font-black text-base mt-3" style={{ color:reviews[active].color }}>{reviews[active].logo}</p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Bottom row — remaining cards on desktop */}
+        <div className="hidden md:grid md:grid-cols-2 gap-6 mt-6">
+          {reviews.slice(2).map((r,i)=>(
+            <motion.div
+              key={r.company}
+              initial={{ opacity:0, y:24 }}
+              animate={inView?{opacity:1,y:0}:{}}
+              transition={{ delay:0.4+i*0.12 }}
+              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-black"
+                    style={{ background:"linear-gradient(135deg,#D447FF,#9519FF)" }}
+                  >B</div>
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <p className="text-gray-900 font-bold text-sm">Bharath</p>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#D447FF"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p className="text-gray-400 text-xs">UI Designer</p>
+                  </div>
+                </div>
+                <svg viewBox="0 0 24 24" fill="#0077B5" width="20" height="20">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                {text} <strong>{r.company}</strong>
+              </p>
+              <span className="font-black text-base" style={{ color:r.color }}>{r.logo}</span>
             </motion.div>
           ))}
         </div>
