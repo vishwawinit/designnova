@@ -2,23 +2,19 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "DesignNova — Learn UI/UX Design in 60 Days",
   description:
-    "Master UI/UX Design with AI in just 60 days. Industry-certified curriculum, expert mentors, and guaranteed placement assistance. Join 25K+ satisfied students.",
+    "India's #1 UI/UX Design bootcamp. Master Figma, AI tools & industry workflows with expert mentors. 92% placement rate. Join 25K+ graduates.",
+  keywords: "UI UX design course, Figma bootcamp, product design, UX research, AI design tools, design career",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#0A0012] text-white">
+    <html lang="en" className={`${geist.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-white text-[#1a0030] antialiased">
         {children}
       </body>
     </html>

@@ -2,10 +2,9 @@
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-/* ─── Design Tokens ───────────────────────────── */
+/* ─── Design Tokens ───────────────────────────────── */
 :root {
   --purple:       #D447FF;
   --purple-light: #EFB9FF;
@@ -26,26 +25,34 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
+  background: #fff;
   color: var(--text-h);
   font-family: var(--font-geist-sans), -apple-system, system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Scrollbar ────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #faf5ff; }
-::-webkit-scrollbar-thumb { background: #D447FF; border-radius: 3px; }
+/* ─── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#D447FF, #9519FF);
+  border-radius: 4px;
+}
 
-/* ─── Keyframes ────────────────────────────────── */
+/* ─── Keyframes ──────────────────────────────────── */
 @keyframes float {
   0%,100% { transform: translateY(0px); }
-  50%      { transform: translateY(-16px); }
+  50%      { transform: translateY(-18px); }
+}
+@keyframes float2 {
+  0%,100% { transform: translateY(0px) translateX(0px); }
+  33%     { transform: translateY(-12px) translateX(6px); }
+  66%     { transform: translateY(6px) translateX(-8px); }
 }
 @keyframes pulse-orb {
-  0%,100% { opacity: .3; transform: scale(1); }
-  50%      { opacity: .65; transform: scale(1.06); }
+  0%,100% { opacity: .2; transform: scale(1); }
+  50%      { opacity: .6; transform: scale(1.1); }
 }
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
@@ -55,26 +62,87 @@ body {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+@keyframes ticker-rev {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position:  200% center; }
 }
+@keyframes gradient-flow {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+@keyframes ping-dot {
+  0%        { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2.8); opacity: 0; }
+}
+@keyframes badge-pop {
+  0%   { opacity: 0; transform: scale(0.75) translateY(14px); }
+  60%  { transform: scale(1.06) translateY(-3px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes scroll-caret {
+  0%,100% { transform: translateY(0); opacity: 0.5; }
+  50%     { transform: translateY(8px); opacity: 1; }
+}
+@keyframes border-glow {
+  0%,100% { box-shadow: 0 0 0 1.5px rgba(212,71,255,.35); }
+  50%     { box-shadow: 0 0 22px 4px rgba(212,71,255,.65); }
+}
+@keyframes progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(var(--scroll)); }
+}
+@keyframes count-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.85); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes reveal-mask {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+@keyframes tilt-in {
+  from { opacity: 0; transform: perspective(600px) rotateY(20deg) translateX(30px); }
+  to   { opacity: 1; transform: perspective(600px) rotateY(0deg) translateX(0); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: .7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
 
-/* ─── Utility classes ──────────────────────────── */
-.float       { animation: float     7s ease-in-out infinite; }
-.pulse-orb   { animation: pulse-orb 4s ease-in-out infinite; }
-.spin-slow   { animation: spin-slow 28s linear infinite; }
-.ticker-inner{ display: inline-flex; animation: ticker 30s linear infinite; }
+/* ─── Utility classes ────────────────────────────── */
+.float        { animation: float     7s ease-in-out infinite; }
+.float2       { animation: float2    9s ease-in-out infinite; }
+.pulse-orb    { animation: pulse-orb 4.5s ease-in-out infinite; }
+.spin-slow    { animation: spin-slow 28s linear infinite; }
+.spin-rev     { animation: spin-slow 18s linear infinite reverse; }
+.ticker-inner { display: inline-flex; animation: ticker     32s linear infinite; }
+.ticker-rev   { display: inline-flex; animation: ticker-rev 32s linear infinite; }
+.ping-dot     { animation: ping-dot 2s cubic-bezier(0,0,.2,1) infinite; }
+.gradient-flow{ background-size: 300% 300%; animation: gradient-flow 6s ease infinite; }
+.count-in     { animation: count-in 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+.badge-pop    { animation: badge-pop 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+.scroll-caret { animation: scroll-caret 1.8s ease-in-out infinite; }
 
-/* Gradient text  — exact SVG palette */
+/* Gradient text — SVG palette */
 .grad-text {
-  background: linear-gradient(135deg, #D447FF 0%, #EFB9FF 100%);
+  background: linear-gradient(135deg, #D447FF 0%, #9519FF 50%, #EFB9FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
-/* White gradient text (for dark sections) */
+/* Animated shimmer text */
+.shimmer-text {
+  background: linear-gradient(90deg, #D447FF, #EFB9FF, #fff, #EFB9FF, #D447FF);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+/* White gradient text (on dark) */
 .grad-text-white {
   background: linear-gradient(135deg, #fff 0%, #EFB9FF 100%);
   -webkit-background-clip: text;
@@ -82,79 +150,96 @@ body {
   background-clip: text;
 }
 
-/* Shimmer text */
-.shimmer-text {
-  background: linear-gradient(90deg, #D447FF, #EFB9FF, #fff, #EFB9FF, #D447FF);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
-}
-
-/* ─── Buttons ──────────────────────────────────── */
-
-/* On light bg: purple filled */
+/* ─── Buttons ────────────────────────────────────── */
 .btn-purple {
   background: linear-gradient(135deg, #D447FF, #9519FF);
-  color: white;
-  box-shadow: 0 4px 24px rgba(212,71,255,.35);
-  transition: box-shadow .3s, transform .3s;
+  color: #fff;
+  box-shadow: 0 6px 28px rgba(212,71,255,.40);
+  transition: all .25s cubic-bezier(0.22,1,0.36,1);
 }
 .btn-purple:hover {
-  box-shadow: 0 8px 40px rgba(212,71,255,.55);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 46px rgba(212,71,255,.60);
+  transform: translateY(-3px) scale(1.02);
 }
+.btn-purple:active { transform: translateY(0) scale(0.98); }
 
-/* On purple bg: solid white */
 .btn-white {
   background: #fff;
   color: #D447FF;
   font-weight: 700;
   box-shadow: 0 4px 20px rgba(0,0,0,.12);
-  transition: box-shadow .3s, transform .3s;
+  transition: all .25s cubic-bezier(0.22,1,0.36,1);
 }
 .btn-white:hover {
-  box-shadow: 0 8px 36px rgba(0,0,0,.2);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 44px rgba(0,0,0,.22);
+  transform: translateY(-3px) scale(1.02);
 }
+.btn-white:active { transform: scale(0.98); }
 
-/* On purple bg: ghost */
 .btn-ghost-white {
   background: rgba(255,255,255,.18);
   color: #fff;
   border: 1.5px solid rgba(255,255,255,.45);
   backdrop-filter: blur(8px);
-  transition: background .3s, transform .3s;
+  transition: all .25s cubic-bezier(0.22,1,0.36,1);
 }
 .btn-ghost-white:hover {
-  background: rgba(255,255,255,.28);
+  background: rgba(255,255,255,.30);
+  transform: translateY(-3px);
+}
+
+.btn-outline-purple {
+  background: transparent;
+  color: #D447FF;
+  border: 1.5px solid #D447FF;
+  transition: all .25s cubic-bezier(0.22,1,0.36,1);
+}
+.btn-outline-purple:hover {
+  background: #FAEAFF;
   transform: translateY(-2px);
 }
 
-/* ─── Cards ────────────────────────────────────── */
+/* ─── Cards ──────────────────────────────────────── */
 .card-pale {
-  background: var(--bg-card);        /* #FAEAFF */
+  background: var(--bg-card);
   border: 1.5px solid #EFB9FF;
-  transition: transform .3s, box-shadow .3s;
+  transition: transform .35s cubic-bezier(0.22,1,0.36,1), box-shadow .35s;
 }
 .card-pale:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(212,71,255,.15);
+  transform: translateY(-9px);
+  box-shadow: 0 28px 60px rgba(212,71,255,.17);
 }
 
 .card-white {
   background: #fff;
   border: 1.5px solid #EFB9FF;
   box-shadow: 0 2px 16px rgba(212,71,255,.07);
-  transition: transform .3s, box-shadow .3s;
+  transition: transform .35s cubic-bezier(0.22,1,0.36,1), box-shadow .35s;
 }
 .card-white:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(212,71,255,.14);
+  transform: translateY(-7px);
+  box-shadow: 0 22px 56px rgba(212,71,255,.15);
 }
 
-/* ─── Misc ─────────────────────────────────────── */
+/* Animated gradient-border card */
+.card-grad-border {
+  position: relative;
+  background: #fff;
+  border-radius: 24px;
+  isolation: isolate;
+}
+.card-grad-border::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #D447FF, #EFB9FF, #9519FF, #D447FF);
+  background-size: 300% 300%;
+  animation: gradient-flow 4s ease infinite;
+  z-index: -1;
+}
+
+/* ─── Section tag pill ───────────────────────────── */
 .section-tag {
   display: inline-flex;
   align-items: center;
@@ -162,14 +247,13 @@ body {
   background: var(--bg-card);
   border: 1.5px solid #EFB9FF;
   color: #D447FF;
-  font-size: .75rem;
+  font-size: .72rem;
   font-weight: 700;
-  letter-spacing: .1em;
+  letter-spacing: .11em;
   text-transform: uppercase;
-  padding: 6px 16px;
+  padding: 5px 16px;
   border-radius: 99px;
 }
-
 .divider-dot {
   width: 6px; height: 6px;
   border-radius: 50%;
@@ -177,12 +261,25 @@ body {
   display: inline-block;
 }
 
-/* gradient border ring */
-.ring-purple {
-  outline: 2px solid transparent;
-  outline-offset: 3px;
-  background-clip: padding-box;
+/* ─── Misc ───────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(212,71,255,.12) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
-.ring-purple:focus-visible {
-  outline-color: #D447FF;
+
+.glow-circle {
+  animation: pulse-ring 2s cubic-bezier(0,0,.2,1) infinite;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid #D447FF;
+  outline-offset: 3px;
 }
