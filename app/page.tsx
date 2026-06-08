@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Ticker from "@/components/Ticker";
 import Stats from "@/components/Stats";
 import Features from "@/components/Features";
+import Mentor from "@/components/Mentor";
 import Curriculum from "@/components/Curriculum";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import Certificate from "@/components/Certificate";
@@ -22,6 +23,7 @@ export default function Home() {
       <Ticker />
       <Stats />
       <Features />
+      <Mentor />
       <Curriculum />
       <ProjectShowcase />
       <Certificate />
