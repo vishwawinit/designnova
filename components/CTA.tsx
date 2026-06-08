@@ -6,7 +6,7 @@ import { Zap } from "lucide-react";
 
 const stats = [
   { val: "25K+", lbl: "Students" },
-  { val: "92%",  lbl: "Placed" },
+  { val: "10K+", lbl: "Placed" },
   { val: "4.8★", lbl: "Rating" },
   { val: "60",   lbl: "Days" },
 ];
