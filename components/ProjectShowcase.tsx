@@ -90,35 +90,86 @@ export default function ProjectShowcase() {
             </a>
           </motion.div>
 
+          {/* Device mockup — laptop + floating tablet */}
           <motion.div
             initial={{opacity:0,x:30}} animate={inView?{opacity:1,x:0}:{}} transition={{delay:0.2,duration:0.7}}
-            className="rounded-3xl overflow-hidden shadow-2xl"
-            style={{background:"rgba(255,255,255,0.14)",border:"1.5px solid rgba(255,255,255,0.25)"}}
+            className="relative flex items-end justify-center"
+            style={{ minHeight:"320px" }}
           >
-            <div className="bg-white/20 px-5 py-3 flex items-center gap-2 border-b border-white/15">
-              {["#F24E1E","#FFB800","#0ACF83"].map((c,i)=>(
-                <div key={i} className="w-2.5 h-2.5 rounded-full" style={{background:c}}/>
-              ))}
-              <div className="flex-1 mx-3 h-4 rounded-full bg-white/20"/>
-            </div>
-            <div className="p-6">
-              <div className="grid grid-cols-4 gap-2 mb-4">
-                {["Dashboard","Users","Reports","Settings"].map(l=>(
-                  <div key={l} className="rounded-xl py-2 px-2 text-center" style={{background:"rgba(255,255,255,0.18)"}}>
-                    <div className="w-5 h-5 rounded-full bg-white/40 mx-auto mb-1.5"/>
-                    <p className="text-white text-[9px] font-semibold">{l}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="rounded-2xl p-4" style={{background:"rgba(255,255,255,0.12)"}}>
-                <p className="text-white/80 text-xs font-bold mb-3">{content[active].title}</p>
-                <div className="space-y-1.5">
-                  {[80,60,90,45].map((w,i)=>(
-                    <div key={i} className="h-2 rounded-full bg-white/25" style={{width:`${w}%`}}/>
+            {/* Laptop frame */}
+            <div className="relative z-10 w-full max-w-[420px]">
+              {/* Screen */}
+              <div className="rounded-t-2xl overflow-hidden shadow-2xl border-[3px] border-white/40"
+                style={{ background:"#fff", aspectRatio:"16/10" }}
+              >
+                {/* Browser bar */}
+                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-gray-100 bg-gray-50">
+                  {["#F24E1E","#FFB800","#0ACF83"].map((c,i)=>(
+                    <div key={i} className="w-2 h-2 rounded-full" style={{background:c}}/>
                   ))}
+                  <div className="flex-1 ml-2 h-3 rounded bg-gray-200 text-[7px] text-gray-400 flex items-center px-2">designnova.app</div>
+                </div>
+                {/* App UI */}
+                <div className="flex h-full">
+                  {/* Sidebar */}
+                  <div className="w-16 bg-[#FAEAFF] border-r border-[#EFB9FF] p-2 flex flex-col gap-2">
+                    {["🏠","📚","📊","⚙️"].map((ic,i)=>(
+                      <div key={i} className={`w-full aspect-square rounded-lg flex items-center justify-center text-base ${i===0?"bg-[#D447FF]":""}`}>
+                        <span style={{filter:i===0?"brightness(10)":""}}>{ic}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Main content */}
+                  <div className="flex-1 p-2.5 overflow-hidden">
+                    <div className="flex gap-1.5 mb-2">
+                      {[{c:"#D447FF",v:"1,250"},{c:"#0ACF83",v:"94%"},{c:"#FFB800",v:"32"}].map((s,i)=>(
+                        <div key={i} className="flex-1 rounded-lg p-1.5" style={{background:`${s.c}15`}}>
+                          <p className="font-black text-xs" style={{color:s.c}}>{s.v}</p>
+                          <p className="text-[7px] text-gray-400">stat {i+1}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="rounded-lg overflow-hidden border border-gray-100">
+                      <div className="bg-[#D447FF] py-1.5 px-2">
+                        <p className="text-white text-[8px] font-bold">{content[active].title}</p>
+                      </div>
+                      {[...Array(3)].map((_,i)=>(
+                        <div key={i} className="flex items-center gap-2 px-2 py-1.5 border-b border-gray-50">
+                          <div className="w-4 h-4 rounded" style={{background:`#EFB9FF`}}/>
+                          <div className="flex-1">
+                            <div className="h-1.5 rounded bg-gray-200 mb-0.5" style={{width:`${75-i*15}%`}}/>
+                            <div className="h-1 rounded bg-gray-100" style={{width:`${50-i*10}%`}}/>
+                          </div>
+                          <div className="w-5 h-2 rounded-full" style={{background:"#D447FF20"}}/>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
+              {/* Laptop base */}
+              <div className="w-full h-3 rounded-b-sm" style={{background:"rgba(255,255,255,0.35)"}}/>
+              <div className="w-[110%] -ml-[5%] h-1.5 rounded-b-2xl" style={{background:"rgba(255,255,255,0.2)"}}/>
             </div>
+
+            {/* Floating tablet (top-right) */}
+            <motion.div
+              animate={{ y:[0,-8,0] }}
+              transition={{ duration:4, repeat:Infinity, ease:"easeInOut" }}
+              className="absolute top-0 right-0 z-20 w-[130px] rounded-2xl overflow-hidden shadow-xl border-2 border-white/50"
+              style={{ background:"#fff" }}
+            >
+              <div className="bg-[#9519FF] py-1.5 px-2.5 flex items-center justify-between">
+                <p className="text-white text-[7px] font-bold">Dashboard</p>
+                <div className="w-3 h-3 rounded-full bg-white/30"/>
+              </div>
+              <div className="p-2">
+                <div className="w-full h-10 rounded-lg mb-1.5" style={{background:"linear-gradient(135deg,#FAEAFF,#EFB9FF)"}}/>
+                {[65,80,45].map((w,i)=>(
+                  <div key={i} className="h-1.5 rounded-full bg-gray-100 mb-1" style={{width:`${w}%`}}/>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
