@@ -21,11 +21,12 @@ export default function Footer() {
       <div className="relative bg-white overflow-hidden" style={{ lineHeight:1 }}>
         <div className="pointer-events-none select-none text-center font-black uppercase leading-none"
           style={{
-            fontSize:"clamp(5rem,18vw,14rem)",
+            fontSize:"clamp(4rem,14vw,14vw)",
             color:"#D447FF",
-            letterSpacing:"-0.03em",
+            letterSpacing:"0.03em",
             opacity:0.15,
-            padding:"0.1em 0",
+            padding:"0.05em 0",
+            whiteSpace:"nowrap",
           }}
         >
           DESIGN NOVA

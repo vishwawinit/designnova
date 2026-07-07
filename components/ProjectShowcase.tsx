@@ -90,57 +90,76 @@ export default function ProjectShowcase() {
             </a>
           </motion.div>
 
-          {/* Device mockup — laptop + floating tablet */}
+          {/* LMS platform mockup matching Frame 105 */}
           <motion.div
             initial={{opacity:0,x:30}} animate={inView?{opacity:1,x:0}:{}} transition={{delay:0.2,duration:0.7}}
-            className="relative flex items-end justify-center"
-            style={{ minHeight:"320px" }}
+            className="relative flex items-center justify-center"
+            style={{ minHeight:"340px" }}
           >
-            {/* Laptop frame */}
-            <div className="relative z-10 w-full max-w-[420px]">
-              {/* Screen */}
-              <div className="rounded-t-2xl overflow-hidden shadow-2xl border-[3px] border-white/40"
-                style={{ background:"#fff", aspectRatio:"16/10" }}
-              >
-                {/* Browser bar */}
-                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-gray-100 bg-gray-50">
-                  {["#F24E1E","#FFB800","#0ACF83"].map((c,i)=>(
-                    <div key={i} className="w-2 h-2 rounded-full" style={{background:c}}/>
+            {/* Main laptop screen */}
+            <div className="relative z-10 w-full max-w-[440px] drop-shadow-2xl">
+              <div className="rounded-2xl overflow-hidden border-2 border-white/30" style={{background:"#fff"}}>
+                {/* Browser chrome */}
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 border-b border-gray-200">
+                  {["#FF5F57","#FFBD2E","#28C840"].map((c,i)=>(
+                    <div key={i} className="w-2.5 h-2.5 rounded-full" style={{background:c}}/>
                   ))}
-                  <div className="flex-1 ml-2 h-3 rounded bg-gray-200 text-[7px] text-gray-400 flex items-center px-2">designnova.app</div>
+                  <div className="flex-1 mx-2 bg-white rounded h-4 flex items-center px-2">
+                    <span className="text-[8px] text-gray-400">designnova.app/courses</span>
+                  </div>
                 </div>
-                {/* App UI */}
-                <div className="flex h-full">
-                  {/* Sidebar */}
-                  <div className="w-16 bg-[#FAEAFF] border-r border-[#EFB9FF] p-2 flex flex-col gap-2">
-                    {["🏠","📚","📊","⚙️"].map((ic,i)=>(
-                      <div key={i} className={`w-full aspect-square rounded-lg flex items-center justify-center text-base ${i===0?"bg-[#D447FF]":""}`}>
-                        <span style={{filter:i===0?"brightness(10)":""}}>{ic}</span>
+                {/* LMS UI */}
+                <div className="flex" style={{height:"200px"}}>
+                  {/* Left nav */}
+                  <div className="w-14 bg-[#F8F0FF] border-r border-gray-100 flex flex-col items-center py-2 gap-2">
+                    {[
+                      {bg:"#D447FF",icon:"M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"},
+                      {bg:"transparent",icon:"M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"},
+                      {bg:"transparent",icon:"M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"},
+                      {bg:"transparent",icon:"M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"},
+                    ].map((n,i)=>(
+                      <div key={i} className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background:n.bg==="transparent"?"transparent":n.bg}}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={n.bg==="transparent"?"#aaa":"white"} strokeWidth="2" strokeLinecap="round"><path d={n.icon}/></svg>
                       </div>
                     ))}
                   </div>
                   {/* Main content */}
-                  <div className="flex-1 p-2.5 overflow-hidden">
+                  <div className="flex-1 p-2.5 overflow-hidden bg-white">
+                    {/* Hero banner */}
+                    <div className="rounded-xl p-3 mb-2 flex items-center justify-between" style={{background:"linear-gradient(120deg,#D447FF,#9519FF)"}}>
+                      <div>
+                        <p className="text-white font-black text-[9px] leading-tight">Unlock 1,000+</p>
+                        <p className="text-white font-black text-[9px] leading-tight">Premium Courses Today</p>
+                        <div className="mt-1 bg-white rounded px-1.5 py-0.5 inline-block">
+                          <p className="text-[7px] font-bold" style={{color:"#D447FF"}}>Explore Now →</p>
+                        </div>
+                      </div>
+                      <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                      </div>
+                    </div>
+                    {/* Course thumbnails row */}
                     <div className="flex gap-1.5 mb-2">
-                      {[{c:"#D447FF",v:"1,250"},{c:"#0ACF83",v:"94%"},{c:"#FFB800",v:"32"}].map((s,i)=>(
-                        <div key={i} className="flex-1 rounded-lg p-1.5" style={{background:`${s.c}15`}}>
-                          <p className="font-black text-xs" style={{color:s.c}}>{s.v}</p>
-                          <p className="text-[7px] text-gray-400">stat {i+1}</p>
+                      {[
+                        {color:"#D447FF",label:"UI/UX"},
+                        {color:"#0ACF83",label:"Figma"},
+                        {color:"#FFB800",label:"Design"},
+                      ].map((c,i)=>(
+                        <div key={i} className="flex-1 rounded-lg overflow-hidden border border-gray-100">
+                          <div className="h-7" style={{background:`linear-gradient(135deg,${c.color}30,${c.color}60)`}}/>
+                          <div className="px-1.5 py-1">
+                            <p className="text-[7px] font-bold text-gray-700">{c.label}</p>
+                            <div className="h-1 rounded-full bg-gray-100 mt-0.5"><div className="h-1 rounded-full" style={{width:`${60+i*10}%`,background:c.color}}/></div>
+                          </div>
                         </div>
                       ))}
                     </div>
-                    <div className="rounded-lg overflow-hidden border border-gray-100">
-                      <div className="bg-[#D447FF] py-1.5 px-2">
-                        <p className="text-white text-[8px] font-bold">{content[active].title}</p>
-                      </div>
-                      {[...Array(3)].map((_,i)=>(
-                        <div key={i} className="flex items-center gap-2 px-2 py-1.5 border-b border-gray-50">
-                          <div className="w-4 h-4 rounded" style={{background:`#EFB9FF`}}/>
-                          <div className="flex-1">
-                            <div className="h-1.5 rounded bg-gray-200 mb-0.5" style={{width:`${75-i*15}%`}}/>
-                            <div className="h-1 rounded bg-gray-100" style={{width:`${50-i*10}%`}}/>
-                          </div>
-                          <div className="w-5 h-2 rounded-full" style={{background:"#D447FF20"}}/>
+                    {/* Stats row */}
+                    <div className="flex gap-1.5">
+                      {[{v:"1,250",l:"Students",c:"#D447FF"},{v:"94%",l:"Completion",c:"#0ACF83"},{v:"32",l:"Modules",c:"#FFB800"}].map((s,i)=>(
+                        <div key={i} className="flex-1 rounded-lg p-1.5 text-center" style={{background:`${s.c}12`}}>
+                          <p className="font-black text-[9px]" style={{color:s.c}}>{s.v}</p>
+                          <p className="text-[6px] text-gray-400">{s.l}</p>
                         </div>
                       ))}
                     </div>
@@ -148,26 +167,31 @@ export default function ProjectShowcase() {
                 </div>
               </div>
               {/* Laptop base */}
-              <div className="w-full h-3 rounded-b-sm" style={{background:"rgba(255,255,255,0.35)"}}/>
-              <div className="w-[110%] -ml-[5%] h-1.5 rounded-b-2xl" style={{background:"rgba(255,255,255,0.2)"}}/>
+              <div className="w-full h-2.5 rounded-b" style={{background:"rgba(255,255,255,0.3)"}}/>
+              <div className="w-[112%] -ml-[6%] h-1.5 rounded-b-xl" style={{background:"rgba(255,255,255,0.18)"}}/>
             </div>
 
-            {/* Floating tablet (top-right) */}
+            {/* Floating schedule card — top right */}
             <motion.div
-              animate={{ y:[0,-8,0] }}
-              transition={{ duration:4, repeat:Infinity, ease:"easeInOut" }}
-              className="absolute top-0 right-0 z-20 w-[130px] rounded-2xl overflow-hidden shadow-xl border-2 border-white/50"
-              style={{ background:"#fff" }}
+              animate={{ y:[0,-10,0] }}
+              transition={{ duration:4, repeat:Infinity, ease:"easeInOut", delay:1 }}
+              className="absolute -top-4 -right-2 z-20 w-36 rounded-2xl overflow-hidden shadow-2xl border border-white/40"
+              style={{background:"#fff"}}
             >
-              <div className="bg-[#9519FF] py-1.5 px-2.5 flex items-center justify-between">
-                <p className="text-white text-[7px] font-bold">Dashboard</p>
-                <div className="w-3 h-3 rounded-full bg-white/30"/>
+              <div className="px-3 py-2" style={{background:"linear-gradient(135deg,#9519FF,#D447FF)"}}>
+                <p className="text-white text-[8px] font-bold">Daily Quest</p>
               </div>
-              <div className="p-2">
-                <div className="w-full h-10 rounded-lg mb-1.5" style={{background:"linear-gradient(135deg,#FAEAFF,#EFB9FF)"}}/>
-                {[65,80,45].map((w,i)=>(
-                  <div key={i} className="h-1.5 rounded-full bg-gray-100 mb-1" style={{width:`${w}%`}}/>
+              <div className="p-2.5">
+                {["Wireframing","Prototyping","User Research"].map((t,i)=>(
+                  <div key={i} className="flex items-center gap-1.5 mb-1.5">
+                    <div className="w-3 h-3 rounded flex items-center justify-center flex-shrink-0" style={{background:i===0?"#D447FF":"#EFB9FF"}}>
+                      {i===0&&<svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17L4 12"/></svg>}
+                    </div>
+                    <p className={`text-[7px] font-medium ${i===0?"line-through text-gray-300":"text-gray-600"}`}>{t}</p>
+                  </div>
                 ))}
+                <div className="mt-2 h-1 rounded-full bg-gray-100"><div className="h-1 rounded-full" style={{width:"65%",background:"#D447FF"}}/></div>
+                <p className="text-[6px] text-gray-400 mt-0.5">65% Complete</p>
               </div>
             </motion.div>
           </motion.div>

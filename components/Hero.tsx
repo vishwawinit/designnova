@@ -130,20 +130,28 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — mascot */}
+          {/* RIGHT — mascot with circular glow */}
           <motion.div
             initial={{ opacity:0, scale:0.8, y:20 }}
             animate={{ opacity:1, scale:1, y:0 }}
             transition={{ duration:1, delay:0.3, ease:[0.22,1,0.36,1] }}
-            className="hidden lg:block shrink-0"
+            className="hidden lg:block shrink-0 relative"
             style={{ animation:"float 5s ease-in-out infinite" }}
           >
+            {/* Radial glow blob behind mascot */}
+            <div className="absolute inset-0 -inset-x-12 -inset-y-8 rounded-full"
+              style={{
+                background:"radial-gradient(ellipse 70% 75% at 50% 55%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.1) 45%, transparent 75%)",
+                filter:"blur(18px)",
+                zIndex:0,
+              }}
+            />
             <Image
               src="/mascot.png"
               alt="UI/UX Mascot"
               width={420}
               height={460}
-              className="drop-shadow-2xl"
+              className="drop-shadow-2xl relative z-10"
               priority
             />
           </motion.div>

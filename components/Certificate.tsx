@@ -172,7 +172,7 @@ export default function Certificate() {
                 {/* Body */}
                 <div className="px-7 py-7">
                   <p className="text-[#9370b3] text-xs mb-1.5">This certifies that</p>
-                  <p className="text-[#1a0030] font-black text-2xl mb-1">Your Name Here</p>
+                  <p className="text-[#1a0030] font-black text-2xl mb-1">Kristina Volchek</p>
                   <div className="w-20 h-0.5 mb-3" style={{ background: "linear-gradient(90deg,#D447FF,#EFB9FF)" }} />
                   <p className="text-[#7a5899] text-xs mb-4">has successfully completed the 60-day programme</p>
 
